@@ -69,6 +69,7 @@ claude mcp add iblai-blog --transport sse https://your-server.com/iblai-blog/sse
 | Server | Description | Base URL |
 |--------|-------------|----------|
 | [iblai-blog](./iblai-blog) | Blog API for IBL.ai | https://blog.ibl.ai |
+| [iblai-instructure](./iblai-instructure) | Instructure Canvas LMS API | https://ibleducation.instructure.com |
 
 ## Creating New MCP Servers
 
