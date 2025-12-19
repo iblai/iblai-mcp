@@ -1,0 +1,14 @@
+[project]
+name = "mcp-creator"
+version = "1.0.0"
+description = "Generate MCP servers from HAR files"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+mcp-creator = "cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
