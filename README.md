@@ -64,10 +64,22 @@ claude mcp add iblai-blog --transport sse https://your-server.com/iblai-blog/sse
 
 ## Available MCP Servers
 
+### Standalone Servers (Local Installation)
+
 | Server | Description | Base URL |
 |--------|-------------|----------|
 | [iblai-blog](./iblai-blog) | Blog API for IBL.ai | https://blog.ibl.ai |
 | [iblai-instructure](./iblai-instructure) | Instructure Canvas LMS API | https://ibleducation.instructure.com |
+
+### Hosted Servers (IBL.ai Platform)
+
+These MCP servers are hosted on the IBL.ai platform and require no local installation:
+
+| Server | Description | Endpoint |
+|--------|-------------|----------|
+| [iblai-search](./iblai-search) | Mentor discovery, catalog search, recommendations | `/mcp/search/sse` |
+| [iblai-analytics](./iblai-analytics) | Analytics, metrics, costs, conversation insights | `/mcp/analytics/sse` |
+| [iblai-mentorai-chat](./iblai-mentorai-chat) | Direct AI mentor interactions | `/mcp/mentor-chat/sse` |
 
 ## Server Structure
 
