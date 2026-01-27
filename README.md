@@ -77,9 +77,10 @@ These MCP servers are hosted on the IBL.ai platform and require no local install
 
 | Server | Description | Endpoint |
 |--------|-------------|----------|
-| [iblai-search](./iblai-search) | Mentor discovery, catalog search, recommendations | `/mcp/search/sse` |
-| [iblai-analytics](./iblai-analytics) | Analytics, metrics, costs, conversation insights | `/mcp/analytics/sse` |
-| [iblai-mentorai-chat](./iblai-mentorai-chat) | Direct AI mentor interactions | `/mcp/mentor-chat/sse` |
+| [iblai-analytics](./iblai-analytics) | Analytics, metrics, costs, conversation insights | `/mcp/analytics/` |
+| [iblai-search](./iblai-search) | Mentor discovery, catalog search, recommendations | `/mcp/search/` |
+| [iblai-agent-create](./iblai-agent-create) | Create and manage AI mentors | `/mcp/agent-create/` |
+| [iblai-mentorai-chat](./iblai-mentorai-chat) | Direct AI mentor interactions | `/mcp/agent-chat/` |
 
 ## Server Structure
 

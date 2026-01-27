@@ -2,7 +2,7 @@
 
 MCP (Model Context Protocol) server for IBL.ai analytics endpoints providing comprehensive insights into mentor interactions, user engagement, LLM costs, and learning patterns.
 
-**Base URL:** `https://base.manager.iblai.app` (or your IBL.ai deployment)
+**Base URL:** `https://asgi.data.iblai.app` (or your IBL.ai deployment)
 
 **Type:** Hosted (no local installation required)
 
@@ -14,22 +14,27 @@ The iblai-analytics server enables AI assistants to access detailed analytics ab
 
 ### Authentication
 
-The server uses Bearer token authentication. Users must authenticate via IBL.ai platform credentials.
+The server uses Api-Token authentication via the `Authorization` header. You need a Platform API Key from your IBL.ai admin panel.
 
 ## Usage
 
-### Connect from Claude Desktop
+### Connect from Claude Desktop / Cursor
 
-Add this to your Claude Desktop configuration file:
+Add this to your configuration file:
 
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Claude Desktop (macOS)**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Claude Desktop (Windows)**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Cursor**: Settings > Features > MCP Servers
 
 ```json
 {
   "mcpServers": {
     "iblai-analytics": {
-      "url": "https://base.manager.iblai.app/mcp/analytics/sse"
+      "transport": "streamable-http",
+      "url": "https://asgi.data.iblai.app/mcp/analytics/",
+      "headers": {
+        "Authorization": "Api-Token YOUR_API_TOKEN"
+      }
     }
   }
 }
@@ -38,21 +43,7 @@ Add this to your Claude Desktop configuration file:
 ### Connect from Claude Code
 
 ```bash
-claude mcp add iblai-analytics --transport sse https://base.manager.iblai.app/mcp/analytics/sse
-```
-
-### Connect from Cursor
-
-Add to your MCP configuration:
-
-```json
-{
-  "mcpServers": {
-    "iblai-analytics": {
-      "url": "https://base.manager.iblai.app/mcp/analytics/sse"
-    }
-  }
-}
+claude mcp add iblai-analytics --transport http https://asgi.data.iblai.app/mcp/analytics/ --header "Authorization: Api-Token YOUR_API_TOKEN"
 ```
 
 ## Available Tools
@@ -109,7 +100,6 @@ Retrieve chat message history for a user.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/chat-history/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `page`: Page number for pagination
 - `page_size`: Results per page
@@ -123,7 +113,6 @@ Filter chat history with advanced criteria.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/chat-history-filter/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `mentor`: Filter by mentor ID
 - `start_date`: Start date filter
@@ -138,7 +127,6 @@ Get conversation sessions for a user.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/conversation/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -150,7 +138,6 @@ Get detailed message transcripts from conversations.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/transcripts/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `session_id`: Specific session to retrieve
 
@@ -163,7 +150,6 @@ Get summarized conversation data.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/conversation-summary/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -177,7 +163,6 @@ Get a summary of topics discussed across conversations.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/topics/summary/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -189,7 +174,6 @@ Get the most frequently discussed topics.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/most-discussed-topics/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `limit`: Maximum number of topics to return
 
@@ -202,7 +186,6 @@ Get paginated topic statistics.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/topic-statistics/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `page`: Page number
 - `page_size`: Results per page
@@ -216,7 +199,6 @@ Get overview of topic distribution.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/topic-overview/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -230,7 +212,6 @@ Get overall analytics summary for the platform.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/overview-summary/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -242,7 +223,6 @@ Get mentor usage summary for users.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/usage-summary/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -254,7 +234,6 @@ Get detailed user engagement metrics.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/user-metrics/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -266,7 +245,6 @@ Get user metrics formatted for pie chart visualization.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/user-metrics-pie-chart/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -278,7 +256,6 @@ Get average number of messages per chat session.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/average-messages-per-session/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -290,7 +267,6 @@ Get ranking of students by chat activity.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/top-students-by-chat-messages/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `limit`: Maximum number of students to return
 
@@ -305,7 +281,6 @@ Get trend of user registrations over time.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/registered-users-trend/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `start_date`: Start date for trend
 - `end_date`: End date for trend
@@ -319,7 +294,6 @@ Get user cohort analysis over time.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/user-cohorts-over-time/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -333,7 +307,6 @@ Get summary statistics for mentors.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/mentor-summary/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -345,7 +318,6 @@ Get detailed analytics for a specific mentor.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/mentor-detail/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `mentor_id`: Mentor unique identifier
 
@@ -358,7 +330,6 @@ Get user count breakdown by mentor.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/total-users-by-mentor/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -372,7 +343,6 @@ Get sentiment analysis of user conversations.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/user-sentiment/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -384,7 +354,6 @@ Get count of sentiment categories.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/sentiment-count/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -396,7 +365,6 @@ Get user rating summary for mentor interactions.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/rating-summary/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -408,7 +376,6 @@ Get user feedback ratings.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/user-feedback/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -422,7 +389,6 @@ Get LLM usage costs broken down by user.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/costs/peruser/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -434,7 +400,6 @@ Get LLM usage costs broken down by mentor.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/costs/permentor/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -446,7 +411,6 @@ Get LLM costs by model type.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/costs/model/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -468,7 +432,6 @@ Get total LLM cost for a tenant.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/tenant-cost/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -480,7 +443,6 @@ Get LLM cost for a specific user.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/user-cost/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -492,7 +454,6 @@ Get LLM cost for a specific mentor.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/mentors/{mentor_unique_id}/cost/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 - `mentor_unique_id`: Mentor unique identifier (required)
 
@@ -507,7 +468,6 @@ Get execution traces for debugging.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/traces/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -519,7 +479,6 @@ Get observations from execution traces.
 **Endpoint:** GET /api/ai-analytics/orgs/{org}/users/{user_id}/observations/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `user_id`: User identifier (required)
 
 ---
@@ -560,6 +519,7 @@ Get observations from execution traces.
 | Server | Description |
 |--------|-------------|
 | [iblai-search](../iblai-search) | Search and discovery tools |
+| [iblai-agent-create](../iblai-agent-create) | Create and manage AI mentors |
 | [iblai-mentorai-chat](../iblai-mentorai-chat) | Mentor chat interactions |
 
 ## License
