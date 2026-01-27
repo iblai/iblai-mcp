@@ -1,4 +1,4 @@
-# iblai-mentorai-chat
+# iblai-agent-chat
 
 MCP (Model Context Protocol) server for IBL.ai mentor chat interactions, enabling AI assistants to communicate with configured AI mentors.
 
@@ -8,7 +8,7 @@ MCP (Model Context Protocol) server for IBL.ai mentor chat interactions, enablin
 
 ## Overview
 
-The iblai-mentorai-chat server provides a bridge between MCP-compatible AI assistants (like Claude) and IBL.ai's mentor system. This allows users to interact with specialized AI mentors configured for specific domains, courses, or purposes through their preferred AI assistant interface.
+The iblai-agent-chat server provides a bridge between MCP-compatible AI assistants (like Claude) and IBL.ai's mentor system. This allows users to interact with specialized AI mentors configured for specific domains, courses, or purposes through their preferred AI assistant interface.
 
 ## Configuration
 
@@ -38,7 +38,7 @@ Add this to your configuration file:
 ```json
 {
   "mcpServers": {
-    "iblai-mentorai-chat": {
+    "iblai-agent-chat": {
       "transport": "streamable-http",
       "url": "https://asgi.data.iblai.app/mcp/agent-chat/",
       "headers": {
@@ -53,7 +53,7 @@ Add this to your configuration file:
 ### Connect from Claude Code
 
 ```bash
-claude mcp add iblai-mentorai-chat --transport http https://asgi.data.iblai.app/mcp/agent-chat/ --header "Authorization: Api-Token YOUR_API_TOKEN" --header "X-Mentor-Unique-Id: YOUR_MENTOR_UNIQUE_ID"
+claude mcp add iblai-agent-chat --transport http https://asgi.data.iblai.app/mcp/agent-chat/ --header "Authorization: Api-Token YOUR_API_TOKEN" --header "X-Mentor-Unique-Id: YOUR_MENTOR_UNIQUE_ID"
 ```
 
 ## Available Tools
