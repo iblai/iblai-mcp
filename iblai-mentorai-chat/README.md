@@ -2,7 +2,7 @@
 
 MCP (Model Context Protocol) server for IBL.ai mentor chat interactions, enabling AI assistants to communicate with configured AI mentors.
 
-**Base URL:** `https://base.manager.iblai.app` (or your IBL.ai deployment)
+**Base URL:** `https://asgi.data.iblai.app` (or your IBL.ai deployment)
 
 **Type:** Hosted (no local installation required)
 
@@ -14,33 +14,36 @@ The iblai-mentorai-chat server provides a bridge between MCP-compatible AI assis
 
 ### Authentication
 
-The server uses Bearer token authentication along with mentor identification. Users must:
-1. Authenticate via IBL.ai platform credentials
-2. Provide the mentor's unique ID via the `X-Mentor-Unique-Id` header
+The server uses Api-Token authentication via the `Authorization` header, plus a mentor identifier. You need:
+1. A Platform API Key from your IBL.ai admin panel
+2. The mentor's unique ID via the `X-Mentor-Unique-Id` header
 
 ### Required Headers
 
 | Header | Description | Required |
 |--------|-------------|----------|
-| `Authorization` | Bearer token for user authentication | Yes |
+| `Authorization` | Api-Token for authentication | Yes |
 | `X-Mentor-Unique-Id` | Unique identifier of the mentor to interact with | Yes |
 
 ## Usage
 
-### Connect from Claude Desktop
+### Connect from Claude Desktop / Cursor
 
-Add this to your Claude Desktop configuration file:
+Add this to your configuration file:
 
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Claude Desktop (macOS)**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Claude Desktop (Windows)**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Cursor**: Settings > Features > MCP Servers
 
 ```json
 {
   "mcpServers": {
     "iblai-mentorai-chat": {
-      "url": "https://base.manager.iblai.app/mcp/mentor-chat/sse",
+      "transport": "streamable-http",
+      "url": "https://asgi.data.iblai.app/mcp/agent-chat/",
       "headers": {
-        "X-Mentor-Unique-Id": "your-mentor-unique-id"
+        "Authorization": "Api-Token YOUR_API_TOKEN",
+        "X-Mentor-Unique-Id": "YOUR_MENTOR_UNIQUE_ID"
       }
     }
   }
@@ -50,26 +53,7 @@ Add this to your Claude Desktop configuration file:
 ### Connect from Claude Code
 
 ```bash
-claude mcp add iblai-mentorai-chat --transport sse https://base.manager.iblai.app/mcp/mentor-chat/sse
-```
-
-Note: You'll need to configure the mentor ID header separately or include it in the connection URL if supported.
-
-### Connect from Cursor
-
-Add to your MCP configuration:
-
-```json
-{
-  "mcpServers": {
-    "iblai-mentorai-chat": {
-      "url": "https://base.manager.iblai.app/mcp/mentor-chat/sse",
-      "headers": {
-        "X-Mentor-Unique-Id": "your-mentor-unique-id"
-      }
-    }
-  }
-}
+claude mcp add iblai-mentorai-chat --transport http https://asgi.data.iblai.app/mcp/agent-chat/ --header "Authorization: Api-Token YOUR_API_TOKEN" --header "X-Mentor-Unique-Id: YOUR_MENTOR_UNIQUE_ID"
 ```
 
 ## Available Tools
@@ -137,15 +121,19 @@ Configure multiple mentor connections for different tasks:
 {
   "mcpServers": {
     "python-tutor": {
-      "url": "https://base.manager.iblai.app/mcp/mentor-chat/sse",
+      "transport": "streamable-http",
+      "url": "https://asgi.data.iblai.app/mcp/agent-chat/",
       "headers": {
-        "X-Mentor-Unique-Id": "python-mentor-id"
+        "Authorization": "Api-Token YOUR_API_TOKEN",
+        "X-Mentor-Unique-Id": "PYTHON_MENTOR_ID"
       }
     },
     "data-science-expert": {
-      "url": "https://base.manager.iblai.app/mcp/mentor-chat/sse",
+      "transport": "streamable-http",
+      "url": "https://asgi.data.iblai.app/mcp/agent-chat/",
       "headers": {
-        "X-Mentor-Unique-Id": "ds-mentor-id"
+        "Authorization": "Api-Token YOUR_API_TOKEN",
+        "X-Mentor-Unique-Id": "DS_MENTOR_ID"
       }
     }
   }
@@ -191,6 +179,7 @@ Check with your IBL.ai administrator for specific limits.
 |--------|-------------|
 | [iblai-analytics](../iblai-analytics) | Monitor mentor usage and costs |
 | [iblai-search](../iblai-search) | Discover available mentors |
+| [iblai-agent-create](../iblai-agent-create) | Create and manage AI mentors |
 
 ## License
 

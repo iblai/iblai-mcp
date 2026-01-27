@@ -2,34 +2,39 @@
 
 MCP (Model Context Protocol) server for IBL.ai search endpoints including mentor discovery, catalog search, and content recommendations.
 
-**Base URL:** `https://base.manager.iblai.app` (or your IBL.ai deployment)
+**Base URL:** `https://asgi.data.iblai.app` (or your IBL.ai deployment)
 
 **Type:** Hosted (no local installation required)
 
 ## Overview
 
-The iblai-search server provides AI assistants with tools to search for mentors, courses, and get personalized content recommendations. This enables intelligent discovery of learning resources within the IBL.ai platform.
+The iblai-search server provides AI assistants with tools to search for mentors, courses, and get content recommendations. This enables intelligent discovery of learning resources within the IBL.ai platform.
 
 ## Configuration
 
 ### Authentication
 
-The server uses Bearer token authentication. Users must authenticate via IBL.ai platform credentials.
+The server uses Api-Token authentication via the `Authorization` header. You need a Platform API Key from your IBL.ai admin panel.
 
 ## Usage
 
-### Connect from Claude Desktop
+### Connect from Claude Desktop / Cursor
 
-Add this to your Claude Desktop configuration file:
+Add this to your configuration file:
 
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Claude Desktop (macOS)**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Claude Desktop (Windows)**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Cursor**: Settings > Features > MCP Servers
 
 ```json
 {
   "mcpServers": {
     "iblai-search": {
-      "url": "https://base.manager.iblai.app/mcp/search/sse"
+      "transport": "streamable-http",
+      "url": "https://asgi.data.iblai.app/mcp/search/",
+      "headers": {
+        "Authorization": "Api-Token YOUR_API_TOKEN"
+      }
     }
   }
 }
@@ -38,105 +43,56 @@ Add this to your Claude Desktop configuration file:
 ### Connect from Claude Code
 
 ```bash
-claude mcp add iblai-search --transport sse https://base.manager.iblai.app/mcp/search/sse
-```
-
-### Connect from Cursor
-
-Add to your MCP configuration:
-
-```json
-{
-  "mcpServers": {
-    "iblai-search": {
-      "url": "https://base.manager.iblai.app/mcp/search/sse"
-    }
-  }
-}
+claude mcp add iblai-search --transport http https://asgi.data.iblai.app/mcp/search/ --header "Authorization: Api-Token YOUR_API_TOKEN"
 ```
 
 ## Available Tools
 
-### Mentor Search Tools
+### `get_catalog_search`
 
-#### `get_v2_global_mentor_search`
-
-Search for mentors globally across the platform.
-
-**Endpoint:** GET /api/ai-search/mentors/
-
-**Parameters:**
-- `org`: Organization/tenant identifier (required)
-- `query`: Search query string
-- `page`: Page number for pagination
-- `page_size`: Number of results per page
-
----
-
-#### `get_v2_personalized_mentors`
-
-Get personalized mentor recommendations based on user preferences and history.
-
-**Endpoint:** GET /api/ai-search/mentors/personalized/
-
-**Parameters:**
-- `org`: Organization/tenant identifier (required)
-- `user_id`: User identifier (required)
-- `page`: Page number for pagination
-- `page_size`: Number of results per page
-
----
-
-### Catalog Search Tools
-
-#### `get_trigram_catalog_search`
-
-Search the course catalog using trigram matching for fuzzy search.
+Search the course catalog for courses, programs, pathways, and skills.
 
 **Endpoint:** GET /api/search/catalog/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
 - `query`: Search query string
-- `page`: Page number for pagination
-- `page_size`: Number of results per page
+- `limit`: Maximum number of results to return
+
+**Returns:** Search results with courses, programs, pathways, and facets for filtering
 
 ---
 
-#### `get_personalized_catalog_search`
+### `get_mentor_search`
 
-Get personalized course recommendations from the catalog.
+Search for mentors across the platform.
 
-**Endpoint:** GET /api/search/personalized-catalog/
+**Endpoint:** GET /api/ai-search/mentors/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
-- `user_id`: User identifier (required)
-- `page`: Page number for pagination
-- `page_size`: Number of results per page
+- `query`: Search query string
+- `limit`: Maximum number of results to return
+
+**Returns:** List of mentors matching the query with metadata
 
 ---
 
-### Recommendation Tools
+### `get_recommendations`
 
-#### `get_v2_recommendations`
-
-Get AI-powered course recommendations for a user.
+Get AI-powered course recommendations.
 
 **Endpoint:** GET /api/ai-search/recommendations/
 
 **Parameters:**
-- `org`: Organization/tenant identifier (required)
-- `user_id`: User identifier (required)
 - `limit`: Maximum number of recommendations
+- `recommendation_type`: Type of recommendations (`mentors`, `courses`, `programs`, `resources`, `pathways`)
+
+**Returns:** Personalized recommendations based on RAG search
 
 ---
 
-### Health Check
+### `ping`
 
-#### `ping_search`
-
-Simple health check tool for the search MCP server.
+Health check tool for the search MCP server.
 
 **Parameters:** None
 
@@ -158,11 +114,11 @@ Search for courses matching your learning goals:
 
 > "Search for beginner courses on data science."
 
-### Personalized Recommendations
+### Content Recommendations
 
-Get recommendations tailored to your learning history:
+Get recommendations tailored to your platform:
 
-> "What courses would you recommend for me based on my previous enrollments?"
+> "What courses would you recommend for learning Python?"
 
 ## Error Handling
 
@@ -178,9 +134,9 @@ Get recommendations tailored to your learning history:
 | Server | Description |
 |--------|-------------|
 | [iblai-analytics](../iblai-analytics) | Analytics and reporting tools |
+| [iblai-agent-create](../iblai-agent-create) | Create and manage AI mentors |
 | [iblai-mentorai-chat](../iblai-mentorai-chat) | Mentor chat interactions |
 
 ## License
 
 Proprietary - IBL.ai
-
