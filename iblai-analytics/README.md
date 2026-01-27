@@ -520,7 +520,7 @@ Get observations from execution traces.
 |--------|-------------|
 | [iblai-search](../iblai-search) | Search and discovery tools |
 | [iblai-agent-create](../iblai-agent-create) | Create and manage AI mentors |
-| [iblai-mentorai-chat](../iblai-mentorai-chat) | Mentor chat interactions |
+| [iblai-agent-chat](../iblai-agent-chat) | Mentor chat interactions |
 
 ## License
 

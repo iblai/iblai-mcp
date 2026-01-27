@@ -135,7 +135,7 @@ Get recommendations tailored to your platform:
 |--------|-------------|
 | [iblai-analytics](../iblai-analytics) | Analytics and reporting tools |
 | [iblai-agent-create](../iblai-agent-create) | Create and manage AI mentors |
-| [iblai-mentorai-chat](../iblai-mentorai-chat) | Mentor chat interactions |
+| [iblai-agent-chat](../iblai-agent-chat) | Mentor chat interactions |
 
 ## License
 

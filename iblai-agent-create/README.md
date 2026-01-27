@@ -204,7 +204,7 @@ Train a document directly (for smaller documents).
 |--------|-------------|
 | [iblai-analytics](../iblai-analytics) | Monitor mentor usage and costs |
 | [iblai-search](../iblai-search) | Discover available mentors |
-| [iblai-mentorai-chat](../iblai-mentorai-chat) | Chat with mentors |
+| [iblai-agent-chat](../iblai-agent-chat) | Chat with mentors |
 
 ## License
 
