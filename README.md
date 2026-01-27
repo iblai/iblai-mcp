@@ -1,6 +1,6 @@
 # iblai-mcp
 
-A collection of MCP (Model Context Protocol) servers for the IBL.ai platform.
+A collection of MCP (Model Context Protocol) servers for the ibl.ai platform.
 
 ## Available MCP Servers
 
