@@ -4,7 +4,7 @@ A collection of MCP (Model Context Protocol) servers for the ibl.ai platform.
 
 ## Available MCP Servers
 
-These MCP servers are hosted on the IBL.ai platform and require no local installation:
+These MCP servers are hosted on the ibl.ai platform and require no local installation:
 
 | Server | Description | Endpoint |
 |--------|-------------|----------|
