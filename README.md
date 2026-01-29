@@ -12,6 +12,7 @@ These MCP servers are hosted on the ibl.ai platform and require no local install
 | [iblai-search](./iblai-search) | Mentor discovery, catalog search, recommendations | `/mcp/search/` |
 | [iblai-agent-create](./iblai-agent-create) | Create and manage AI mentors | `/mcp/agent-create/` |
 | [iblai-agent-chat](./iblai-agent-chat) | Direct AI mentor interactions | `/mcp/agent-chat/` |
+| [iblai-user](./iblai-user) | Learner analytics and career profile management | `/mcp/user/` |
 
 ## Quick Start
 
