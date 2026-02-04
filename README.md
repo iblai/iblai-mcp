@@ -13,6 +13,8 @@ These MCP servers are hosted on the ibl.ai platform and require no local install
 | [iblai-agent-create](./iblai-agent-create) | Create and manage AI mentors | `/mcp/agent-create/` |
 | [iblai-agent-chat](./iblai-agent-chat) | Direct AI mentor interactions | `/mcp/agent-chat/` |
 | [iblai-user](./iblai-user) | Learner analytics and career profile management | `/mcp/user/` |
+| [iblai-canvas-user](./iblai-canvas-user) | Canvas LMS account management (read-only) | `/mcp/canvas-user/` |
+| [iblai-canvas-course](./iblai-canvas-course) | Canvas LMS course operations (read-only) | `/mcp/canvas-course/` |
 
 ## Quick Start
 
