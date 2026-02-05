@@ -24,10 +24,14 @@ The server uses Api-Token authentication via the `Authorization` header. You nee
 
 ### Prerequisites
 
+> **Important:** Before using this MCP server, you must have registered your Canvas LMS authentication configuration with the IBL.ai platform. This means a **CanvasConfig** record must exist for your platform — without it, the server cannot proxy requests to your Canvas instance. Contact your IBL.ai administrator if this has not been set up.
+
 1. Platform API Key from IBL.ai admin panel
 2. CanvasConfig record configured for the platform with:
    - Canvas host URL
    - Canvas access token
+
+   Your Canvas admin must provide these credentials, and they must be registered in the IBL.ai platform's admin panel under the Canvas configuration for your platform.
 
 ## Usage
 
